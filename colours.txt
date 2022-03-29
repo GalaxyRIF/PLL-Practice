@@ -1,0 +1,6 @@
+Yellow:1
+White:0
+Orange:0
+Red:0
+Blue:0
+Green:0
