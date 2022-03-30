@@ -216,6 +216,7 @@ position=img.get_rect()
 interval,timing,showscore,startsaving=True,False,True,False
 time=0.00
 allstats=''
+saved=0
 astats=Stats()
 try:
     astats.read()
@@ -240,7 +241,8 @@ while True:
         elif event.type== KEYUP and startsaving==True:
             startsaving=False 
         #启动计时，终止间隔
-        elif event.type == KEYUP and interval==True and event.key!=306 and startsaving==False:
+        elif event.type == KEYUP and event.key!=120 and interval==True and event.key!=306 and startsaving==False:
+            saved=0
             timing=True
             interval=False
             tmp=random.choice(allpic)
@@ -249,14 +251,16 @@ while True:
             showscore=False
             timea=datetime.datetime.now()
         #进入间隔
-        elif event.type == KEYUP and interval==False and event.key!=306 and startsaving==False:
+        elif event.type == KEYUP  and interval==False and event.key!=306 and startsaving==False:
             interval=True
         #终止计时-失败
-        elif event.type==KEYDOWN and timing==True and event.key==120:
+        elif event.type==KEYDOWN  and event.key==120:
             #print('FFFF')
             timeb=datetime.datetime.now()
             del timeb
-            astats.addfailtime(infolist)
+            if saved==0:
+                astats.addfailtime(infolist)
+                saved=1
             #print(time)
             imga=None
             timing=False
