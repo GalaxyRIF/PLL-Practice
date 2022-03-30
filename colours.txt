@@ -4,3 +4,5 @@ Orange:0
 Red:0
 Blue:0
 Green:0
+EN:1
+CN:0

@@ -117,6 +117,7 @@ def readpics(colourstate):
     allpic=[]
     for each in colourstate:
         print(each,colourstate[each])
+        
         if colourstate[each]==True:
             pathx=path+each+'/'
             #print(pathx)
@@ -126,7 +127,7 @@ def readpics(colourstate):
                 allpic.append(apath)
         else:
             pass
-
+    print('Language:%s'%lan[:-3])        
     '''
     for file in files: #遍历文件夹
         apath=path+file
@@ -156,7 +157,9 @@ def checktxt(directory):
                   raise Exception
     except:
         stxt=stxt=open(directory+'colours.txt','w')
-        stxt.write('Yellow:1\nWhite:0\nOrange:0\nRed:0\nBlue:0\nGreen:0')
+        stxt.write('Yellow:1\nWhite:0\nOrange:0\nRed:0\nBlue:0\nGreen:0\n'#colors
+        +'EN:1\nCN:0'#language setting  
+        )
         stxt.close()
 
 
@@ -191,14 +194,7 @@ screen=pygame.display.set_mode(size)
 pygame.display.set_caption('PLL练习软件')
 engfont=pygame.freetype.Font(directory+'ARLRDBD.TTF')
 cnfont=pygame.freetype.Font(directory+'STCAIYUN.TTF')
-#使用说明
 
-linea='使用说明'
-lineb='S键：生成存档，R键：读取存档'
-linec='X键：记入识别失败'
-lined='其他任意键：启动/结束计时'
-linee='最后一列的数字是失败次数'
-lines=[linea,lineb,linec,lined,linee]
 #读取打乱模式
 facef=open(directory+'colours.txt','r')
 colourstate={}
@@ -206,7 +202,33 @@ clsx=['Yellow','White','Orange','Red','Blue','Green']
 for i in range(6):
     x=facef.readline()
     colourstate[clsx[i]]=('1' in x)
+# Language
+lan=facef.readline()# ENGLISH
+if '1' in lan:#use english
+    language='EN'
+    cnfont=engfont
+else:
+    language='CN'
+
 allpic=readpics(colourstate)
+
+#使用说明
+
+if language=='CN':
+    linea='使用说明'
+    lineb='S键：生成存档，R键：读取存档'
+    linec='X键：记入识别失败'
+    lined='其他任意键：启动/结束计时'
+    linee='最后一列的数字是失败次数'
+    lines=[linea,lineb,linec,lined,linee]
+
+elif language=='EN':
+    linea='Instructions'
+    lineb='S: Save records, R: Read records'
+    linec='X: Mark this attempt failure'
+    lined='Other keys: Start/End timing'
+    linee='Last row is faliure count.'
+    lines=[linea,lineb,linec,lined,linee]
 #读取图片
 asd=random.choice(allpic)
 #print(asd)
